@@ -36,11 +36,13 @@ def parse_task_line(line):
     
     if match:
         status, name, task_id = match.groups()
+        # Create display string - add checkmark if task is done
+        display = f"{name} (✔)" if status == "[x]" else name
         return {
             "id": task_id,
             "name": name,
             "status": status,
-            "display": f"{status} {name}"
+            "display": display
         }
     return None
 
