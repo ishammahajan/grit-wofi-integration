@@ -26,6 +26,8 @@ def add_subtask(parent_id, task_name):
         cmd = ['grit', 'add']
         if parent_id:
             cmd.extend(['-p', parent_id])
+        else:
+            cmd.append('-r')
         cmd.append(task_name)
         subprocess.run(cmd, check=True)
         return True
