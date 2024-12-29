@@ -121,14 +121,13 @@ def navigate_tasks():
                     current_task_id = task_stack[-1]["id"] if task_stack else None
                 else:
                     break
-                    
-        # Save state after each navigation action
-        save_navigation_state(task_stack)
-                    
         else:
             # User selected a task - drill down
             task_stack.append(selected)
             current_task_id = selected["id"]
+            
+        # Save state after each navigation action
+        save_navigation_state(task_stack)
 
 def main():
     navigate_tasks()
