@@ -20,6 +20,34 @@ def parse_task_line(line):
         }
     return None
 
+def add_subtask(parent_id, task_name):
+    """Add a new subtask"""
+    try:
+        cmd = ['grit', 'add']
+        if parent_id:
+            cmd.extend(['-p', parent_id])
+        cmd.append(task_name)
+        subprocess.run(cmd, check=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+def check_task(task_id):
+    """Mark a task as done"""
+    try:
+        subprocess.run(['grit', 'check', task_id], check=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+def remove_task(task_id):
+    """Remove a task"""
+    try:
+        subprocess.run(['grit', 'rm', task_id], check=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
 def get_tasks_at_level(task_id=None):
     """
     Get tasks at a specific level
