@@ -1,5 +1,29 @@
 import subprocess
 import re
+import json
+import os
+
+def get_state_file_path():
+    """Get the path to the state file in /tmp"""
+    return '/tmp/grit-wofi-state.json'
+
+def save_navigation_state(task_stack):
+    """Save the current navigation state to tmp file"""
+    try:
+        with open(get_state_file_path(), 'w') as f:
+            json.dump([task for task in task_stack], f)
+    except Exception as e:
+        print(f"Error saving state: {e}")
+
+def load_navigation_state():
+    """Load the navigation state from tmp file"""
+    try:
+        if os.path.exists(get_state_file_path()):
+            with open(get_state_file_path(), 'r') as f:
+                return json.load(f)
+    except Exception as e:
+        print(f"Error loading state: {e}")
+    return []
 
 def parse_task_line(line):
     """

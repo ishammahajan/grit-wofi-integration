@@ -59,7 +59,8 @@ def get_action_items(current_task=None):
 def navigate_tasks():
     """Interactive task navigation"""
     current_task_id = None
-    task_stack = []
+    task_stack = load_navigation_state()
+    current_task_id = task_stack[-1]["id"] if task_stack else None
     
     while True:
         # Get tasks at current level
@@ -120,6 +121,9 @@ def navigate_tasks():
                     current_task_id = task_stack[-1]["id"] if task_stack else None
                 else:
                     break
+                    
+        # Save state after each navigation action
+        save_navigation_state(task_stack)
                     
         else:
             # User selected a task - drill down
