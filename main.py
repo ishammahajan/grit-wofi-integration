@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import subprocess
-from grit_functions import get_tasks_at_level, add_subtask, check_task, remove_task
+from grit_functions import save_navigation_state, load_navigation_state, get_tasks_at_level, add_subtask, check_task, remove_task
 
 def show_wofi_dialog(tasks, prompt="Grit Tasks"):
     """
@@ -44,16 +44,16 @@ def get_action_items(current_task=None):
     if current_task:
         # Actions for a specific task
         return [
-            {"id": "add", "display": "➕ Add subtask to: " + current_task["name"]},
-            {"id": "check", "display": "✓ Mark as done: " + current_task["name"]},
-            {"id": "remove", "display": "❌ Remove: " + current_task["name"]},
-            {"id": "up", "display": "⬅️ Go back"}
+            {"id": "add", "display": "⊕ add subtask: " + current_task["name"]},
+            {"id": "check", "display": "✔ done/check: " + current_task["name"]},
+            {"id": "remove", "display": "✖ remove/delete: " + current_task["name"]},
+            {"id": "up", "display": "↰ go back"}
         ]
     else:
         # Root level actions
         return [
-            {"id": "add_root", "display": "➕ Add new root task"},
-            {"id": "up", "display": "⬅️ Exit"}
+            {"id": "add_root", "display": "⊕ add new root task"},
+            {"id": "up", "display": "↰ go back"}
         ]
 
 def navigate_tasks():
